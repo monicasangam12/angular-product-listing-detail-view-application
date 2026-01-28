@@ -1,0 +1,41 @@
+<form [formGroup]="register">
+    <br>
+    <br>
+    <label for="firstName">First Name</label>
+    <input name="firstName" type="text" formControlName="firstName">
+    <br>
+    <br>
+    <label for="lastName">Last Name</label>
+    <input name="lastName" type="text" formControlName="lastName">
+    <br>
+    <br>
+    <label for="email">Email Address</label>
+    <input name="email" type="text" formControlName="emailAddress">
+    <br>
+    <br>
+    <label for="streetAddr">Street Address</label>
+    <input name="streetAddr" type="text" formControlName="streetAddr">
+    <br>
+    <br>
+    <label for="city">City</label>
+    <input name="city" type="text" formControlName="city">
+    <br>
+    <br>
+    <label for="state">State</label>
+    <input name="state" type="text" formControlName="state">
+    <br>
+    <br>
+    <label for="zipCode">Zipcode</label>
+    <input name="zipCode" type="text" formControlName="zipCode">
+    <br>
+    <br>
+    <label for="username">Username</label>
+    <input name="username" type="text" formControlName="username">
+    <br>
+    <br>
+    <label for="password">Password</label>
+    <input name="password" type="password" formControlName="password">
+    <br>
+    <br>
+    <button (click)="registerNewUser()" type="submit">Registration</button>
+</form>

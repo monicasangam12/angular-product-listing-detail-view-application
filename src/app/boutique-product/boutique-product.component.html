@@ -1,0 +1,18 @@
+<div class="boutique-product-list-container">
+   <div *ngFor="let boutiqueProduct of boutiqueProducts">
+      <div class="boutique-product-item column">
+               <img class="boutique-product-image" [src]="boutiqueProduct.image" [alt]="boutiqueProduct.name"style="width: 20%;"/>
+               <h3>{{boutiqueProduct.name}}</h3>
+                  <p>{{boutiqueProduct.description}}</p>
+            <span>${{boutiqueProduct.price.toFixed(2)}}</span>
+            <button (click)="addToCart(boutiqueProduct)">
+               Add to Cart
+               <div class="cart-icon-container">
+                  <i class="fa fa-shopping-cart cart-icon" value="8" aria-hidden="true">&#xf290;</i>
+                  <span class="item-count">{{ cartItemCount(boutiqueProduct) }}</span>
+               </div>
+            </button>
+         </div>
+   </div>
+     <button style="margin-top: 38rem;" (click)="checkout(boutiqueProducts)">Checkout Product</button>
+</div>
