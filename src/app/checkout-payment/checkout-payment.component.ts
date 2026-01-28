@@ -13,7 +13,7 @@ import { GooglePayButtonModule } from '@google-pay/button-angular';
   templateUrl: './checkout-payment.component.html',
   styleUrl: './checkout-payment.component.scss'
 })
-export class CheckoutPaymentComponent implements OnInit {
+export class CheckoutPaymentComponent {
   checkoutPayment!: FormGroup;
   boutiqueItem!: BoutiqueProductItem;
   paymentMethods: string[] = ['Credit Card', 'Debit Card', 'PayPal', 'Google Pay'];
@@ -59,14 +59,6 @@ export class CheckoutPaymentComponent implements OnInit {
 
     this.onPaymentMethodChanges();  
   }
-
-  ngOnInit() : void{
-    this.initConfig();
-  }
-
-  initConfig() {
- 
-   }
 
   onPaymentMethodChanges() : void{
     this.checkoutPayment.get('paymentMethod')?.valueChanges.subscribe(value => {

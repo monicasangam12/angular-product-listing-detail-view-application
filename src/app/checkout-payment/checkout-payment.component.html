@@ -36,7 +36,7 @@
 </div>
 
 <div *ngIf="checkoutPayment.get('paymentMethod')?.value === 'paypal'">
-    <button (click)="initConfig()"><ngx-paypal [config]="paypalConfig"></ngx-paypal>Pay with PayPal</button>
+    <button><ngx-paypal [config]="paypalConfig"></ngx-paypal>Pay with PayPal</button>
 </div>
 <p>Form Status: {{ checkoutPayment.status }}</p>
 <p>Form Value: {{ checkoutPayment.value | json }}</p>
