@@ -3,6 +3,7 @@ import { RegisterUserComponent } from './register-user/register-user.component';
 import { LoginUserComponent } from './login-user/login-user.component';
 import { BoutiqueProductComponent } from './boutique-product/boutique-product.component';
 import { CheckoutPaymentComponent } from './checkout-payment/checkout-payment.component';
+import { CardPayment } from './card-payment/card-payment';
 
 export const routes: Routes = [
     {
@@ -20,5 +21,9 @@ export const routes: Routes = [
     {
         path: 'checkout-payment',
         component: CheckoutPaymentComponent
+    },
+    {
+        path: 'card-payment',
+        component: CardPayment
     }
 ];

@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BoutiqueProductItem } from '../boutique-product-item';
 import { Event, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ICreateOrderRequest, IPayPalConfig, NgxPayPalModule } from 'ngx-paypal';
 import { GooglePayButtonModule } from '@google-pay/button-angular';
-
+import { AngularStripeService } from '@fireflysemantics/angular-stripe-service';
 @Component({
   selector: 'app-checkout-payment',
   imports: [FormsModule, ReactiveFormsModule, CommonModule, NgxPayPalModule, GooglePayButtonModule],
@@ -16,9 +16,6 @@ import { GooglePayButtonModule } from '@google-pay/button-angular';
 export class CheckoutPaymentComponent {
   checkoutPayment!: FormGroup;
   boutiqueItem!: BoutiqueProductItem;
-  paymentMethods: string[] = ['Credit Card', 'Debit Card', 'PayPal', 'Google Pay'];
-  paymentMethodSelected: string = '';
-  debitCardInfo!: FormControl;
   paypalConfig!: IPayPalConfig; 
   event!: Event;
   paymentRequest: google.payments.api.PaymentDataRequest = {
@@ -51,7 +48,8 @@ export class CheckoutPaymentComponent {
     }
   };
 
-  constructor(private fb: FormBuilder, private router: Router){
+  constructor(private fb: FormBuilder, private router: Router, private cd: ChangeDetectorRef, private stripeService: AngularStripeService
+  ){
     this.checkoutPayment = this.fb.group({
       paymentMethod: new FormControl('', Validators.required)
     });
@@ -73,22 +71,6 @@ export class CheckoutPaymentComponent {
    let detailsFormGroup: FormGroup | undefined;
 
    switch(value){ 
-    case 'creditCard':  
-      detailsFormGroup = this.fb.group({
-        cardNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{16}$')]),
-        cardHolderName: new FormControl('', Validators.required),    
-        expiryDate: new FormControl('', [Validators.required, Validators.pattern('^(0[1-9]|1[0-2])\\/([0-9]{2})$')]),
-        cvv: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{3}$')])
-      });
-      break;
-    case 'debitCard':
-      detailsFormGroup = this.fb.group({
-        cardNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{16}$')]),
-        cardHolderName: new FormControl('', Validators.required),
-        expiryDate: new FormControl('', [Validators.required, Validators.pattern('^(0[1-9]|1[0-2])\\/([0-9]{2})$')]),
-        cvv: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{3}$')])
-      });
-      break;
     case 'paypal':
       this.paypalConfig = {
         currency: 'USD',
@@ -180,25 +162,12 @@ export class CheckoutPaymentComponent {
   }
 
   checkoutNow(boutiqueItem:BoutiqueProductItem){
-    this.paymentMethodSelected = this.checkoutPayment.get('paymentMethod')?.value;
-    console.log('Selected Payment Method:', this.paymentMethodSelected);
+    console.log('Selected Payment Method:', this.checkoutPayment.get('paymentMethod')?.value);
 
     this.router.navigate(['/checkout-success', boutiqueItem.id]);
   }
 
-  onSubmit(){
-    if(this.checkoutPayment.valid){
-      console.log('Checkout Payment Form Submitted:', this.checkoutPayment.value);
-      this.checkoutNow(this.boutiqueItem);
-      console.log('Navigating to Checkout Success Page');
-      console.log('Submitted Payment Method:', this.checkoutPayment.get('paymentMethod')?.value);
-      console.log('Submitted Payment Details:', this.checkoutPayment.get('paymentDetails')?.value);
-     
-    } else {
-      console.log('Checkout Payment Form is valid:', this.checkoutPayment.valid);
-      console.log('Submitted Payment Method:', this.checkoutPayment.get('paymentMethod')?.value);
-      console.log('Submitted Payment Details:', this.checkoutPayment.get('paymentDetails')?.value);
-      alert('Checked out item from the shopping cart successfully!');
-    } 
+  onSubmit() {
+    console.log('Form Submitted!', this.checkoutPayment.value);
   }
 }

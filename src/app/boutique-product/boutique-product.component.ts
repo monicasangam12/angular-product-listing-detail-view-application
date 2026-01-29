@@ -66,6 +66,12 @@ export class BoutiqueProductComponent {
   checkout(products: BoutiqueProductItem[]): void {
    console.log(`Adding an item to the checkout page: ${products[0].name} - $${products[0].price}`);
    alert("Successfully added item to checkout cart");
-   this.router.navigate(['checkout-payment']);
+
+   if (products.length === 0) {
+     alert("Your cart is empty. Please add items to the cart before proceeding to checkout.");
+      this.router.navigate(['checkout-payment']);
+      return;
+   }
+   this.router.navigate(['card-payment']);
   }
 }
