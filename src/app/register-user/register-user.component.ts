@@ -29,8 +29,8 @@ export class RegisterUserComponent {
     console.log(this.register.value);
 
     if(this.register.value.username=="maryann" && this.register.value.password=="ihavealotofoptions"){
-      this.router.navigate(['login-user']);
-      console.log("Successfully went to the login page");
+      this.router.navigate(['angular-oauth2-login']);
+      console.log("Successfully went to the aoauth2 login page");
     }
     //console.log("Still stuck in registration page");
   }
