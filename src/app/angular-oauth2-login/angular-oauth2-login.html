@@ -1,9 +1,20 @@
-<button (click)="loginWithGoogle()" class="button login">Log In with Google OAuth2</button>
-<br>
-<br>
-<button (click)="loginWithFacebook()" class="button login">Log In with Facebook OAuth2</button>
-<br>
- <br>
-<button (click)="loginWithMicrosoft()" class="button login">Log In with Microsoft OAuth2</button>
-<br>
-<br>
+<div>
+    <label for="googleAuthentication">Google Signin</label>
+    <button mat-button style="padding: 1rem;" (click)="loginWithGoogle()" class="button login">
+        <mat-icon style="width: 50px; height: 30px;" svgIcon="logo">Log In with Google OAuth2</mat-icon>
+    </button>
+    <br>
+    <br>
+    <label for="facebookAuthentication">Facebook Signin</label>
+    <button (click)="loginWithFacebook()" class="button login">
+        <mat-icon style="width: 50px; height: 30px;" svgIcon="logo">Log In with Facebook OAuth2</mat-icon>
+    </button>
+    <br>
+    <br>
+    <label for="microsoftAuthentication">Microsoft Signin</label>
+    <button  (click)="loginWithMicrosoft()" class="button login">
+        <mat-icon style="width: 50px; height: 30px;" svgIcon="logo">Log In with Microsoft OAuth2</mat-icon>
+    </button>
+    <br>
+    <br>
+</div>

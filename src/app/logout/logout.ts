@@ -1,5 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
+import { AuthService } from '../auth';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-logout',
@@ -8,9 +10,12 @@ import { AuthService } from '@auth0/auth0-angular';
   styleUrl: './logout.scss',
 })
 export class LogoutComponent {
-  private auth = inject(AuthService);
+  
+  constructor(private authService: AuthService, private router: Router){}
 
   logout(): void {
-    this.auth.logout();
+    this.authService.logoutUser();
+    this.router.navigate(['register-user']);
+    alert("Logged out of the application successfully!");
   }
 }
