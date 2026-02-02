@@ -65,13 +65,18 @@ export class BoutiqueProductComponent {
 
   checkout(products: BoutiqueProductItem[]): void {
    console.log(`Adding an item to the checkout page: ${products[0].name} - $${products[0].price}`);
-   alert("Successfully added item to checkout cart");
-
    if (products.length === 0) {
      alert("Your cart is empty. Please add items to the cart before proceeding to checkout.");
       this.router.navigate(['checkout-payment']);
       return;
    }
+   const subtotal = products[0].price + products[1].price;
+   console.log("The subtotal price of this item is $", subtotal);
+   alert(subtotal);
+   const total = products[0].price + products[1].price + products[3].price;
+   console.log("The total price of this item is $", total);
+   alert(total);
+   alert("Successfully added item to checkout cart"); 
    this.router.navigate(['card-payment']);
   }
 }

@@ -1,18 +1,18 @@
-<form [formGroup]="cardPayment">
-    <select name="cardPaymentOption" formControlName="cardPaymentMethod">
-        <option value="">Select Card Payment Method</option>
-        <option value="debitCard">Debit Card</option>
-        <option value="creditCard">Credit Card</option>
-    </select>
-    <p>You selected this type of payment method: {{ cardPayment.get('cardPaymentMethod')?.value }}</p>
-</form>
-<form #checkout="ngForm" (ngSubmit)="onSubmit(checkout)" class="checkout">
- <div class="form-row">
-    <label for="card-info">Card Info</label>
-    <div id="card-info" #cardInfo></div>
-    <div id="card-errors" role="alert" *ngIf="error">{{error}}</div>
+<div class="row mt-5">
+ <div class="col md-4">
+    <button (click)="pay(200)" class="btn btn-primary btn-block">Pay $200</button>
  </div>
-    <button type="submit">Pay with Stripe</button>
-</form>
-<p>Form Status: {{ cardPayment.status }}</p>
-<p>Form Value: {{ cardPayment.value | json }}</p>
+ <br>
+ <br>
+ <div class="col md-4">
+    <button (click)="pay(285.2)" class="btn btn-success btn-block">Pay $285.20</button>
+ </div>
+ <br>
+ <br>
+ <div class="col md-4">
+    <button (click)="pay(168.17)" class="btn btn-info btn-block">Pay $168.17</button>
+ </div>
+ <p class="mt-5">
+    Try it out using the test card number, random three digit cvc number and any expiration date in the future
+ </p>
+</div>

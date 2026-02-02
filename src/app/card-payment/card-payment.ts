@@ -1,63 +1,56 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormsModule, NgForm } from '@angular/forms';
-import { AngularStripeService } from '@fireflysemantics/angular-stripe-service';
+import { Component, OnInit } from '@angular/core';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-card-payment',
   imports: [ReactiveFormsModule, CommonModule, FormsModule],
-  templateUrl: './card-payment.html',
-  styleUrl: './card-payment.scss',
-})
-export class CardPayment implements AfterViewInit, OnDestroy{
+  templateUrl: './card-payment.html',  styleUrl: './card-payment.scss',})
 
-  error: string | null = null;
-  @ViewChild('cardInfo', { static: true }) cardInfo!: ElementRef;
+export class CardPayment implements OnInit{
 
-  stripe: any;
-  loading = false;
-  confirmation: any;
+  constructor() {}
+  handler:any = null;
 
-  card: any;
-  cardHandler = this.onChange.bind(this);
+  ngOnInit(): void {
+    this.loadStripe();
+  }
 
-  cardPayment = new FormGroup({
-    cardPaymentMethod: new FormControl('', Validators.required)
-  });
-
-  constructor(private cd: ChangeDetectorRef, private stripeService: AngularStripeService) {}
-
-  ngAfterViewInit(): void {
-      this.stripeService.setPublishableKey('pk_test_2syov9fTMRwOxYG97AAXbOgt008X6NL46o').then((stripe) => {
-      this.stripe = stripe;
-      const elements = this.stripe.elements();
-      this.card = elements.create('card');
-      this.card.mount(this.cardInfo.nativeElement);
-      this.card.addEventListener('change', this.cardHandler);
+  pay(amount: any){
+    var handler = (<any>window).StripeCheckout.configure({
+      key: 'pk_test_51HxRkiCumzEESdU2Z1FzfCVAJyiVHyHifo0GeCMAyzHPFme6v6ahYeYbQPpD9BvXbAacO2yFQ8ETlKjo4pkHSHSh00qKzqUVK9',
+      locale: 'auto',
+      token: function(token:any){
+        console.log(token);
+        alert('Token created!!');
+      }
+    });
+    handler.open({
+      name: '',
+      description: '',
+      amount: amount * 100
     });
   }
 
-  ngOnDestroy(): void {
-    this.card.removeEventListener('change', this.cardHandler);
-    this.card.destroy();
-  }
-
-  onChange({error}: {error: any}){
-    if(error){
-      this.error = error.message;
-    } else {
-      this.error = null;
-    }
-    this.cd.detectChanges();
-  }
-
-  async onSubmit(form: NgForm) {
-    const {token, error} = await this.stripe.createToken(this.card);
-    if(error){
-      this.error = error.message;
-      console.log('Error:', error);
-    } else {
-      console.log('Success! Token:', token);
+  loadStripe(){
+    if(!window.document.getElementById('stripe-script')){
+      var s = window.document.createElement("script");
+      s.id = "stripe.script";
+      s.type = "text/javascript";
+      s.src = "https://checkout.stripe.com/checkout.js";
+      s.onload = () => {
+        this.handler = (<any>window).StripeCheckout.configure({
+          key: 'pk_test_51HxRkiCumzEESdU2Z1FzfCVAJyiVHyHifo0GeCMAyzHPFme6v6ahYeYbQPpD9BvXbAacO2yFQ8ETlKjo4pkHSHSh00qKzqUVK9',
+          locale: 'auto',
+          token: function(token: any){
+            console.log(token);
+            alert('Payment success!!');
+          }
+        });
+      }
+      window.document.body.appendChild(s);
     }
   }
+
 }
