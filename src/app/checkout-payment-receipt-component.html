@@ -1,8 +1,0 @@
-<h2>Boutique Cart Items</h2>
-<ul>
-   <li *ngFor="let boutiqueItem of boutiqueItems">
-      {{boutiqueItem.name}} - \${{boutiqueItem.price}} * {{boutiqueItem.quantity}}
-   </li>
-</ul>
-<p>Total: \${{getTotalAmount()}}</p>
-<button (click)="checkout()">Proceed to checkout</button>
