@@ -6,7 +6,3 @@ export interface BoutiqueProductItem{
     image: string;
     quantity: number;
 }
-
-export interface BoutiqueCart extends BoutiqueProductItem {
-    quantity: number;
-}
