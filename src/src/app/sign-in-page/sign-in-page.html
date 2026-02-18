@@ -1,0 +1,7 @@
+<main class="main">
+    @if(isAuthenticated$ | async){
+        <button (click)="signIn()">Sign In</button>
+    }@else{
+        <button (click)="signOut()">Sign Out</button>
+    }
+</main>
